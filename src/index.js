@@ -1,16 +1,32 @@
-// @flow
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import http from 'http';
 
-const root = document.getElementById('root');
-if (root !== null) {
-  ReactDOM.render(<App />, root);
+let app = require('./server').default;
+
+const server = http.createServer(app);
+
+let currentApp = app;
+
+server.listen(process.env.PORT || 3000, error => {
+  if (error) {
+    console.log(error);
+  }
+
+  console.log('🚀 started');
+});
+
+if (module.hot) {
+  console.log('✅  Server-side HMR Enabled!');
+
+  module.hot.accept('./server', () => {
+    console.log('🔁  HMR Reloading `./server`...');
+
+    try {
+      app = require('./server').default;
+      server.removeListener('request', currentApp);
+      server.on('request', app);
+      currentApp = app;
+    } catch (error) {
+      console.error(error);
+    }
+  });
 }
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
