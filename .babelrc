@@ -1,0 +1,9 @@
+{
+  "presets": [
+    "razzle/babel",
+    "@babel/preset-flow"
+  ],
+  "plugins": [
+    "flow-react-proptypes"
+  ]
+}

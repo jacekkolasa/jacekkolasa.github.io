@@ -4,15 +4,23 @@
   "license": "MIT",
   "scripts": {
     "start": "razzle start",
+    "flow": "flow",
     "build": "razzle build",
     "test": "razzle test --env=jsdom",
     "start:prod": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
     "express": "^4.17.0",
     "razzle": "^3.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0"
+  },
+  "devDependencies": {
+    "@babel/preset-flow": "^7.0.0",
+    "babel-plugin-flow-react-proptypes": "^25.1.0",
+    "flow-bin": "^0.98.1",
+    "prop-types": "^15.7.2"
   }
 }

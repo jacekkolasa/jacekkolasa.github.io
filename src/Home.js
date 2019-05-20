@@ -1,8 +1,10 @@
+// @flow
+
 import React from 'react';
 import logo from './react.svg';
 import './Home.css';
 
-class Home extends React.Component {
+class Home extends React.Component<{||}> {
   render() {
     return (
       <div className="Home">
@@ -12,7 +14,7 @@ class Home extends React.Component {
         </div>
         <p className="Home-intro">
           To get started, edit <code>src/App.js</code> or{' '}
-          <code>src/Home.js</code> and save to reload. reloaded
+          <code>src/Home.js</code> and save to reload.
         </p>
         <ul className="Home-resources">
           <li>
