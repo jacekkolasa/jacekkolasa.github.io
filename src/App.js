@@ -1,9 +1,12 @@
+// @flow
 import React from 'react';
-import Route from 'react-router-dom/Route';
-import Switch from 'react-router-dom/Switch';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 import Home from './Home';
+import Growth from './routes/Growth';
+import Settings from './routes/Settings';
+
 import './App.css';
 
 const App = () => {
@@ -11,7 +14,10 @@ const App = () => {
     <div>
       <Navbar />
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/growth-charts" component={Growth} />
+        <Route exact path="/settings" component={Settings} />
+        <Route path="/home" component={Home} />
+        <Redirect from="/" to="/growth-charts" />
       </Switch>
     </div>
   );
