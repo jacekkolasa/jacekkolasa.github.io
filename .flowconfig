@@ -8,6 +8,8 @@
 [libs]
 
 [lints]
+all=error
+dynamic-export=off
 
 [options]
 

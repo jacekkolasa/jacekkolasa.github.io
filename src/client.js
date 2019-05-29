@@ -1,14 +1,20 @@
-import App from './App';
-import BrowserRouter from 'react-router-dom/BrowserRouter';
+// @flow
+import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
 import { hydrate } from 'react-dom';
 
-hydrate(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
-  document.getElementById('root')
-);
+import App from './App';
+
+const root = document.getElementById('root');
+if (root) {
+  hydrate(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>,
+    root
+  );
+}
+
 
 if (module.hot) {
   module.hot.accept();
