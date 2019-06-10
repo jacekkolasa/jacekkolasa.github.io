@@ -11,7 +11,7 @@ if (root) {
     <BrowserRouter>
       <App />
     </BrowserRouter>,
-    root
+    root,
   );
 }
 

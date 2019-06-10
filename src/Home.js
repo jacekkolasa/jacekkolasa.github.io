@@ -4,7 +4,7 @@ import React from 'react';
 import logo from './react.svg';
 import './Home.css';
 
-class Home extends React.Component<{||}> {
+class Home extends React.Component<{||}> { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <div className="Home">
@@ -13,8 +13,10 @@ class Home extends React.Component<{||}> {
           <h2>Welcome to Razzle</h2>
         </div>
         <p className="Home-intro">
+          { /* eslint-disable react/jsx-one-expression-per-line */}
           To get started, edit <code>src/App.js</code> or{' '}
           <code>src/Home.js</code> and save to reload.
+          { /*  eslint-enable react/jsx-one-expression-per-line  */}
         </p>
         <ul className="Home-resources">
           <li>

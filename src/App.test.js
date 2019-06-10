@@ -1,7 +1,8 @@
-import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MemoryRouter from 'react-router-dom/MemoryRouter';
+
+import App from './App';
 
 describe('<App />', () => {
   test('renders without exploding', () => {
@@ -10,7 +11,7 @@ describe('<App />', () => {
       <MemoryRouter>
         <App />
       </MemoryRouter>,
-      div
+      div,
     );
   });
 });

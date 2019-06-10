@@ -1,17 +1,10 @@
 // @flow
 import React from 'react';
 
-type Props = {|
-
-|}
-const Settings = ({
-
-}: Props) => {
-  return (
-    <div>
-      Settings
-    </div>
-  );
-};
+const Settings = () => (
+  <div>
+    Settings component
+  </div>
+);
 
 export default Settings;
