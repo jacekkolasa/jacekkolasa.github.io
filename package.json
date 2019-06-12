@@ -32,5 +32,8 @@
     "flow-bin": "^0.98.1",
     "prop-types": "^15.7.2",
     "react-static-plugin-react-router": "^7.0.10"
+  },
+  "resolutions": {
+    "autoprefixer": "~9.5.1"
   }
 }
