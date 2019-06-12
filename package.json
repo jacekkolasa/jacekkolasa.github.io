@@ -3,20 +3,20 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "start": "razzle start",
+    "start": "react-static start",
+    "stage": "react-static build --staging",
+    "build": "react-static build",
+    "analyze": "react-static build --analyze",
+    "serve": "serve dist -p 3000",
     "lint": "eslint .",
-    "flow": "flow",
-    "build": "razzle build",
-    "test": "razzle test --env=jsdom",
-    "start:prod": "NODE_ENV=production node build/server.js"
+    "flow": "flow"
   },
   "dependencies": {
-    "express": "^4.17.0",
-    "razzle": "^3.0.0",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.9",
     "react-dom": "^16.8.6",
-    "react-router-dom": "^5.0.0"
+    "react-router-dom": "^5.0.0",
+    "react-static": "^7.1.0"
   },
   "devDependencies": {
     "@babel/preset-flow": "^7.0.0",
@@ -30,6 +30,7 @@
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-react-hooks": "^1.6.0",
     "flow-bin": "^0.98.1",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "react-static-plugin-react-router": "^7.0.10"
   }
 }

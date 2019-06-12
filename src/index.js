@@ -1,34 +1,38 @@
-import http from 'http';
+import React from 'react';
+import ReactDOM from 'react-dom';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { AppContainer } from 'react-hot-loader';
 
-// eslint-disable-next-line import/no-dynamic-require
-let app = require('./server').default;
+// Your top level component
+import App from './App';
 
-const server = http.createServer(app);
+// Export your top level component as JSX (for static rendering)
+export default App;
 
-let currentApp = app;
+// Render your app
+if (typeof document !== 'undefined') {
+  const target = document.getElementById('root');
 
-server.listen(process.env.PORT || 3000, (error) => {
-  if (error) {
-    console.log(error); // eslint-disable-line no-console
+  const renderMethod = target.hasChildNodes()
+    ? ReactDOM.hydrate
+    : ReactDOM.render;
+
+  const render = (Comp) => {
+    renderMethod(
+      <AppContainer>
+        <Comp />
+      </AppContainer>,
+      target,
+    );
+  };
+
+  // Render!
+  render(App);
+
+  // Hot Module Replacement
+  if (module && module.hot) {
+    module.hot.accept('./App', () => {
+      render(App);
+    });
   }
-
-  console.log('🚀 started'); // eslint-disable-line no-console
-});
-
-if (module.hot) {
-  console.log('✅  Server-side HMR Enabled!'); // eslint-disable-line no-console
-
-  module.hot.accept('./server', () => {
-    console.log('🔁  HMR Reloading `./server`...'); // eslint-disable-line no-console
-
-    try {
-      // eslint-disable-next-line global-require
-      app = require('./server').default;
-      server.removeListener('request', currentApp);
-      server.on('request', app);
-      currentApp = app;
-    } catch (error) {
-      console.error(error); // eslint-disable-line no-console
-    }
-  });
 }

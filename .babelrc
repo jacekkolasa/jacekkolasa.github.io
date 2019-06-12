@@ -1,6 +1,6 @@
 {
   "presets": [
-    "razzle/babel",
+    "react-static/babel-preset.js",
     "@babel/preset-flow"
   ],
   "plugins": [
