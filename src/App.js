@@ -5,10 +5,10 @@ import {
   Redirect, Route, Switch,
 } from 'react-router-dom';
 
-import Navbar from './components/Navbar';
-import Growth from './routes/Growth';
-import Settings from './routes/Settings';
-import NotFound from './routes/NotFound';
+import Navbar from 'components/Navbar';
+import Growth from 'routes/Growth';
+import Settings from 'routes/Settings';
+import NotFound from 'routes/NotFound';
 
 import './App.css';
 
