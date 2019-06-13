@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
-import Home from './Home';
 import Growth from './routes/Growth';
 import Settings from './routes/Settings';
 import NotFound from './routes/NotFound';
@@ -21,7 +20,6 @@ const App = () => (
       <Switch>
         <Route exact path="/growth-charts" component={Growth} />
         <Route exact path="/settings" component={Settings} />
-        <Route exact path="/home" component={Home} />
         <Redirect exact from="/" to="/growth-charts" />
         <Route component={NotFound} />
         <Route component={() => <Routes />} />

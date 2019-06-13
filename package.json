@@ -9,7 +9,8 @@
     "analyze": "react-static build --analyze",
     "serve": "serve dist -p 3000",
     "lint": "eslint .",
-    "flow": "flow"
+    "flow": "flow",
+    "test": "jest"
   },
   "dependencies": {
     "react": "^16.8.6",
@@ -21,6 +22,7 @@
   "devDependencies": {
     "@babel/preset-flow": "^7.0.0",
     "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.8.0",
     "babel-plugin-flow-react-proptypes": "^25.1.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
@@ -30,10 +32,17 @@
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-react-hooks": "^1.6.0",
     "flow-bin": "^0.98.1",
+    "jest": "^24.8.0",
     "prop-types": "^15.7.2",
     "react-static-plugin-react-router": "^7.0.10"
   },
   "resolutions": {
     "autoprefixer": "~9.5.1"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/utils/__mocks__/fileMock.js",
+      "\\.(css|scss)$": "<rootDir>/src/utils/__mocks__/styleMock.js"
+    }
   }
 }

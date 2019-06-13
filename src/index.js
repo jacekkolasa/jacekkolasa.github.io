@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import ReactDOM from 'react-dom';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -12,27 +13,28 @@ export default App;
 // Render your app
 if (typeof document !== 'undefined') {
   const target = document.getElementById('root');
+  if (target) {
+    const renderMethod = target.hasChildNodes()
+      ? ReactDOM.hydrate
+      : ReactDOM.render;
 
-  const renderMethod = target.hasChildNodes()
-    ? ReactDOM.hydrate
-    : ReactDOM.render;
+    const render = (Comp) => {
+      renderMethod(
+        <AppContainer>
+          <Comp />
+        </AppContainer>,
+        target,
+      );
+    };
 
-  const render = (Comp) => {
-    renderMethod(
-      <AppContainer>
-        <Comp />
-      </AppContainer>,
-      target,
-    );
-  };
+    // Render!
+    render(App);
 
-  // Render!
-  render(App);
-
-  // Hot Module Replacement
-  if (module && module.hot) {
-    module.hot.accept('./App', () => {
-      render(App);
-    });
+    // Hot Module Replacement
+    if (module && module.hot) {
+      module.hot.accept('./App', () => {
+        render(App);
+      });
+    }
   }
 }
