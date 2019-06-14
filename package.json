@@ -53,6 +53,10 @@
     },
     "modulePaths": [
       "<rootDir>/src"
-    ]
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      "\\.(txt)$": "<rootDir>/src/utils/jestTxtTransformer.js"
+    }
   }
 }
