@@ -2,6 +2,7 @@
 <PROJECT_ROOT>/flow-typed
 
 [ignore]
+<PROJECT_ROOT>/node_modules/recompose/dist/Recompose.cjs.js.flow
 
 [include]
 
@@ -9,7 +10,10 @@
 
 [lints]
 all=error
+sketchy-null=off
+unclear-type=warn
 dynamic-export=off
+
 
 [options]
 suppress_comment=\\(.\\|\n\\)*\\$ExpectError

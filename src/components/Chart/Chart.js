@@ -1,10 +1,14 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import Papa from 'papaparse';
+import { withContentRect } from 'react-measure';
+import type { HOC } from 'recompose';
 
 // https://www.who.int/childgrowth/standards/tab_wfa_boys_p_0_5.txt
 // $ExpectError
 import whoData from '../../data/tab_wfa_boys_p_0_5.txt';
+
+import styles from './styles.css';
 
 type Point = {|
   L: string,
@@ -38,13 +42,47 @@ const formatted: Array<Point> = Papa.parse(
     dynamicTyping: true, // convert number strings to Numbers
   },
 );
-console.log('formatted', formatted); // eslint-disable-line
-const Chart = () => { // eslint-disable-line arrow-body-style
+
+type Props = {|
+|}
+type EnhancedProps = {|
+  ...Props,
+  contentRect: {
+    bounds: {||} | {|
+      bottom: number,
+      height: number,
+      left: number,
+      right: number,
+      top: number,
+      width: number,
+    |}
+  },
+  measureRef: () => void // { current: null | React.ElementRef<'div'> }
+|}
+
+const enhance: HOC<EnhancedProps, Props> = withContentRect('bounds');
+
+const Chart = ({
+  contentRect: {
+    bounds,
+  },
+  measureRef,
+}: EnhancedProps) => { // eslint-disable-line arrow-body-style
+  console.debug({ formatted }); // eslint-disable-line
+  if (!bounds.width) {
+    return (<div ref={measureRef} className={styles.container} />);
+  }
+  const chartWidth = bounds.width - 100;
+  const chartHeight = chartWidth * 3 / 4;
   return (
-    <div>
-      Chart
+    <div ref={measureRef} className={styles.container}>
+      <svg
+        className={styles.svg}
+        width={chartWidth}
+        height={chartHeight}
+      />
     </div>
   );
 };
 
-export default Chart;
+export default enhance(Chart);

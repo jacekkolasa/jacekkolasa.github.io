@@ -5,7 +5,6 @@ import Chart from 'components/Chart';
 
 const Growth = () => (
   <div>
-    Growth component
     <Chart />
   </div>
 );
