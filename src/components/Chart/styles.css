@@ -1,8 +1,12 @@
 .container {
-  padding: 50px 25px;
+  padding: 50px;
 }
 
 .svg {
   padding: 5px;
-  background: red;
+  width: 100%;
+  background: #f8f9fa;
+}
+
+.minorXTick {
 }
