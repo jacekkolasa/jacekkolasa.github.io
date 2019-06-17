@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "flow": "flow",
     "test": "jest",
-    "checkAll": "yarn lint && yarn flow && yarn test"
+    "checkAll": "yarn lint && yarn flow && yarn test",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "classnames": "^2.2.6",
@@ -39,6 +40,7 @@
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-react-hooks": "^1.6.0",
     "flow-bin": "^0.101.0",
+    "gh-pages": "^2.0.1",
     "jest": "^24.8.0",
     "prop-types": "^15.7.2",
     "react-static-plugin-css-modules": "^7.1.0",
