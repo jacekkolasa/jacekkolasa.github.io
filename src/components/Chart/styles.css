@@ -18,3 +18,7 @@
 .minorXTick.year {
   stroke: #bebebe;
 }
+
+.line {
+  fill: none;
+}

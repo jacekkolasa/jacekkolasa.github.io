@@ -7,7 +7,7 @@ import * as React from 'react';
 import Papa from 'papaparse';
 import { withContentRect } from 'react-measure';
 import type { HOC } from 'recompose';
-import { line, scaleLinear } from 'd3';
+import { curveCardinal, line, scaleLinear } from 'd3';
 
 // https://www.who.int/childgrowth/standards/tab_wfa_boys_p_0_5.txt
 // $ExpectError
@@ -151,6 +151,18 @@ const Chart = ({
     .ticks(10);
 
 
+  const getLine = (yProp, lineData) => line()
+    .x(d => xScale(d.Month))
+    .y(d => yScale(d[yProp]))
+    .curve(curveCardinal)(lineData);
+
+  const percentiles = [
+    { label: '3rd', propName: 'P3', stroke: '#9E2123' },
+    { label: '15th', propName: 'P15', stroke: '#672022' },
+    { label: '50th', propName: 'P50', stroke: '#669966' },
+    { label: '85th', propName: 'P85', stroke: '#434041' },
+    { label: '97th', propName: 'P97', stroke: '#ACAAAC' },
+  ];
   const sizeInPx = pixels => VIEWBOX_X / svgWidth * pixels;
   return (
     <div ref={measureRef} className={styles.container}>
@@ -200,6 +212,19 @@ const Chart = ({
                 y1={yScale(tick)}
                 y2={yScale(tick)}
                 className={styles.yTick}
+              />
+            </React.Fragment>
+          ))}
+        </g>
+
+        {/* lines */}
+        <g>
+          {percentiles.map(percentile => (
+            <React.Fragment key={percentile.propName}>
+              <path
+                d={getLine(percentile.propName, data)}
+                className={styles.line}
+                stroke={percentile.stroke}
               />
             </React.Fragment>
           ))}
