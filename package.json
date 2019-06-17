@@ -15,6 +15,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "atob": "^2.1.2",
     "classnames": "^2.2.6",
     "d3": "^5.9.2",
     "lodash": "^4.17.11",

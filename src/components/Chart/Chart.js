@@ -8,6 +8,7 @@ import Papa from 'papaparse';
 import { withContentRect } from 'react-measure';
 import type { HOC } from 'recompose';
 import { curveCardinal, line, scaleLinear } from 'd3';
+import atob from 'atob';
 
 // https://www.who.int/childgrowth/standards/tab_wfa_boys_p_0_5.txt
 // $ExpectError
