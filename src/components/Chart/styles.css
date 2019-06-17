@@ -8,6 +8,10 @@
   background: #f8f9fa;
 }
 
+.yTick {
+  stroke: #dedede;
+}
+
 .minorXTick {
   stroke: #dedede;
 }

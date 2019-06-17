@@ -1,11 +1,13 @@
 // @flow
-import { last, rangeStep } from 'lodash/fp';
+import {
+  flatMap, last, map, max, min, omit, pipe, rangeStep, values,
+} from 'lodash/fp';
 import classNames from 'classnames';
 import * as React from 'react';
 import Papa from 'papaparse';
 import { withContentRect } from 'react-measure';
 import type { HOC } from 'recompose';
-import { scaleLinear } from 'd3';
+import { line, scaleLinear } from 'd3';
 
 // https://www.who.int/childgrowth/standards/tab_wfa_boys_p_0_5.txt
 // $ExpectError
@@ -48,6 +50,12 @@ const formatted: FormattedData = Papa.parse(
     dynamicTyping: true, // convert number strings to Numbers
   },
 );
+const { data } = formatted;
+const [minValue, maxValue] = pipe(
+  map(omit(['L', 'M', 'S', 'Month'])), // from each point select only props with values we'll draw
+  flatMap(values), // concat them all together
+  allValues => [min(allValues), max(allValues)],
+)(data);
 
 type Props = {|
 |}
@@ -76,7 +84,6 @@ const Chart = ({
   },
   measureRef,
 }: EnhancedProps) => {
-  const { data } = formatted;
   if (!bounds.width) {
     return (<div ref={measureRef} className={styles.container} />);
   }
@@ -91,6 +98,11 @@ const Chart = ({
   const VIEWBOX_Y = VIEWBOX_X * svgHeight / svgWidth;
   const SVG_PADDING = 40;
 
+
+  /**
+   * x scale calculations
+   *
+   */
   const maxMonth = last(data).Month;
   const xScale = scaleLinear()
     .domain([0, maxMonth])
@@ -126,6 +138,19 @@ const Chart = ({
       : tick % 12
   );
 
+
+  /**
+   * y scale calculations
+   */
+  const yScale = scaleLinear()
+    .domain([minValue, maxValue])
+    .range([VIEWBOX_Y - SVG_PADDING, SVG_PADDING])
+    .nice();
+
+  const yTicks = yScale
+    .ticks(10);
+
+
   const sizeInPx = pixels => VIEWBOX_X / svgWidth * pixels;
   return (
     <div ref={measureRef} className={styles.container}>
@@ -133,7 +158,7 @@ const Chart = ({
         className={styles.svg}
         viewBox={`0 0 ${VIEWBOX_X} ${VIEWBOX_Y}`}
       >
-        {/* x axis descriptions */}
+        {/* x axis labels and grid */}
         <g>
           {xScaleTicks.map(tick => (
             <React.Fragment key={tick}>
@@ -152,6 +177,29 @@ const Chart = ({
                 y1={VIEWBOX_Y - 40}
                 y2={10}
                 className={classNames(styles.minorXTick, { [styles.year]: isYearTick(tick) })}
+              />
+            </React.Fragment>
+          ))}
+        </g>
+
+        {/* y axis labels and grid */}
+        <g>
+          {yTicks.map(tick => (
+            <React.Fragment key={tick}>
+              <text
+                x={SVG_PADDING - 10}
+                y={yScale(tick) + 2}
+                textAnchor="end"
+                fontSize={sizeInPx(12)}
+              >
+                {tick}
+              </text>
+              <line
+                x1={SVG_PADDING}
+                x2={VIEWBOX_X - SVG_PADDING}
+                y1={yScale(tick)}
+                y2={yScale(tick)}
+                className={styles.yTick}
               />
             </React.Fragment>
           ))}
