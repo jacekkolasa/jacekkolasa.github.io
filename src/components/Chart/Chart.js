@@ -1,5 +1,6 @@
 // @flow
 import { last, rangeStep } from 'lodash/fp';
+import classNames from 'classnames';
 import * as React from 'react';
 import Papa from 'papaparse';
 import { withContentRect } from 'react-measure';
@@ -140,17 +141,17 @@ const Chart = ({
                 x={xScale(tick)}
                 y={VIEWBOX_Y - (isYearTick(tick) ? 5 : 25)}
                 textAnchor="middle"
-                className={styles.minorXTick}
                 fontSize={sizeInPx(isYearTick(tick) ? 16 : 12)}
               >
                 {transformTick(tick)}
               </text>
+              {/* x axis grid  */}
               <line
                 x1={xScale(tick)}
                 x2={xScale(tick)}
-                y1={VIEWBOX_Y - 35}
-                y2={VIEWBOX_Y - 43}
-                stroke="black"
+                y1={VIEWBOX_Y - 40}
+                y2={10}
+                className={classNames(styles.minorXTick, { [styles.year]: isYearTick(tick) })}
               />
             </React.Fragment>
           ))}

@@ -9,4 +9,8 @@
 }
 
 .minorXTick {
+  stroke: #dedede;
+}
+.minorXTick.year {
+  stroke: #bebebe;
 }
