@@ -1,6 +1,0 @@
-artifacts/**
-build/**
-dist/**
-flow-typed/**
-node_modules/**
-tmp/**

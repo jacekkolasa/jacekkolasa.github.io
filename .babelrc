@@ -1,9 +1,0 @@
-{
-  "presets": [
-    "react-static/babel-preset.js",
-    "@babel/preset-flow"
-  ],
-  "plugins": [
-    "flow-react-proptypes"
-  ]
-}
