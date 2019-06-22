@@ -1,10 +1,53 @@
 // @flow
-import React from 'react';
+import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
-const Settings = () => (
-  <div>
-    Settings component
-  </div>
-);
+// there's some react-static bug preventing import without assigning to value
+// eslint-disable-next-line no-unused-vars
+import stylesDatePicker from 'react-datepicker/dist/react-datepicker-cssmodules.css';
+
+import styles from './Settings.css';
+
+const Settings = () => {
+  const [birthDate, setBirthDate] = useState();
+
+  const yearsDiff = moment().diff(birthDate, 'years');
+  const monthsDiff = moment().diff(birthDate, 'months') - yearsDiff * 12;
+
+  let yearsString;
+  if (yearsDiff > 1) {
+    yearsString = `${yearsDiff} years, `;
+  } else if (yearsDiff === 1) {
+    yearsString = '1 year, ';
+  }
+  const monthsString = `${monthsDiff} months old`;
+
+  return (
+    <div className={styles.container}>
+      Please provide neccessary data
+      <br />
+      Birth date:
+      <DatePicker
+        selected={birthDate}
+        onChange={(newDate) => {
+          // remove the second argument from onChange callback
+          setBirthDate(newDate);
+        }}
+        maxDate={new Date()}
+        showYearDropdown
+        className={styles.datePicker}
+      />
+      {birthDate && (
+        <div>
+          Age:
+          {' '}
+          {yearsString}
+          {monthsString}
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default Settings;
