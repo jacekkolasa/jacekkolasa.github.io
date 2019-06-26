@@ -9,6 +9,9 @@ import { withContentRect } from 'react-measure';
 import type { HOC } from 'recompose';
 import { curveCardinal, line, scaleLinear } from 'd3';
 import atob from 'atob';
+import moment from 'moment';
+
+import { useSettings } from 'routes/Settings/SettingsContext';
 
 // https://www.who.int/childgrowth/standards/tab_wfa_boys_p_0_5.txt
 // $ExpectError
@@ -165,6 +168,23 @@ const Chart = ({
     { label: '97th', propName: 'P97', stroke: '#ACAAAC' },
   ];
   const sizeInPx = pixels => VIEWBOX_X / svgWidth * pixels;
+
+
+  /**
+   * main line calculations
+   */
+  const [{ points, birthDate }] = useSettings();
+  const birthDateMoment = moment(birthDate);
+
+  const linePoints = points.map(({ value, measurementDate }) => ({
+    x: -birthDateMoment.diff(measurementDate, 'months'),
+    y: value / 1000, // grams to kg
+  }));
+  const mainLine = line()
+    .x(d => xScale(d.x))
+    .y(d => yScale(d.y))
+    .curve(curveCardinal);
+
   return (
     <div ref={measureRef} className={styles.container}>
       <svg
@@ -236,6 +256,12 @@ const Chart = ({
               </text>
             </React.Fragment>
           ))}
+          {/* main line */}
+          <path
+            d={mainLine(linePoints)}
+            className={styles.mainLine}
+            stroke="#631A86"
+          />
         </g>
       </svg>
     </div>

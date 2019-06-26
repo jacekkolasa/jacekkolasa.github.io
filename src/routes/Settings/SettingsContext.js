@@ -24,10 +24,7 @@ export const useSettings = () => {
 
 const initialSettings: Settings = {
   birthDate: null,
-  points: [{
-    value: 5000,
-    measurementDate: new Date(),
-  }],
+  points: [],
 };
 
 export const SettingsProvider = (props: {}) => {

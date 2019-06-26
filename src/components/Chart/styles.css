@@ -23,3 +23,8 @@
   fill: none;
   opacity: .4;
 }
+
+.mainLine {
+  fill: none;
+  stroke-width: 2px;
+}
