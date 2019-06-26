@@ -11,7 +11,7 @@ const FormikObserver = <T: {}>(props: Props<T>) => {
   const { value } = props;
   useEffect(() => {
     props.onChange(props.value);
-  }, [Object.values(value).join(', ')]);
+  }, [JSON.stringify(value)]);
   return null;
 };
 
