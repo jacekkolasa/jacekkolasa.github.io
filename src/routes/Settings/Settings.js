@@ -1,5 +1,5 @@
 // @flow
-import React, { useState } from 'react';
+import React from 'react';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
@@ -9,10 +9,12 @@ import stylesDatePicker from 'react-datepicker/dist/react-datepicker-cssmodules.
 
 import PointsForm from 'components/PointsForm';
 
+import { useSettings } from './SettingsContext';
 import styles from './Settings.css';
 
 const Settings = () => {
-  const [birthDate, setBirthDate] = useState();
+  const [settings, setSettings] = useSettings();
+  const { birthDate } = settings;
 
   const yearsDiff = moment().diff(birthDate, 'years');
   const monthsDiff = moment().diff(birthDate, 'months') - yearsDiff * 12;
@@ -34,7 +36,7 @@ const Settings = () => {
           selected={birthDate}
           onChange={(newDate) => {
             // remove the second argument from onChange callback
-            setBirthDate(newDate);
+            setSettings({ ...settings, birthDate: newDate });
           }}
           maxDate={new Date()}
           showYearDropdown
@@ -50,7 +52,12 @@ const Settings = () => {
         )}
       </div>
       <div className={styles.pointsForm}>
-        <PointsForm />
+        <PointsForm
+          points={settings.points}
+          onChange={(newPoints) => {
+            setSettings({ ...settings, points: newPoints });
+          }}
+        />
       </div>
     </div>
   );
