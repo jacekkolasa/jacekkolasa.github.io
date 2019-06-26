@@ -227,6 +227,13 @@ const Chart = ({
                 className={styles.line}
                 stroke={percentile.stroke}
               />
+              <text
+                x={VIEWBOX_X - SVG_PADDING + 4}
+                y={yScale(last(data)[percentile.propName]) + 2}
+                fontSize={sizeInPx(12)}
+              >
+                {percentile.label}
+              </text>
             </React.Fragment>
           ))}
         </g>
