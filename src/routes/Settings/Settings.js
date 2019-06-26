@@ -61,7 +61,7 @@ const Settings = () => {
           }}
         />
       </div>
-      <div>
+      <div className={styles.exampleDataButton}>
         <Button
           variant="success"
           onClick={() => {
