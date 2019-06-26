@@ -5,6 +5,8 @@ import {
   Redirect, Route, Switch,
 } from 'react-router-dom';
 
+import 'utils/reset.css';
+
 import Navbar from 'components/Navbar';
 import Growth from 'routes/Growth';
 import Settings from 'routes/Settings';
