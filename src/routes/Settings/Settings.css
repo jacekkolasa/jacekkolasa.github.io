@@ -2,7 +2,14 @@
   padding: 20px 40px;
 }
 
+.birthDate {
+  margin-top: 20px;
+}
+
 .datePicker {
   margin-left: 10px;
 }
 
+.pointsForm {
+  margin-top: 20px;
+}

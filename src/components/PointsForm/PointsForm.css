@@ -1,0 +1,15 @@
+.table {
+  width: auto !important; /* :( */
+}
+
+.weightCol {
+  width: 100px;
+}
+
+.measurementCol {
+  width: 1px;
+}
+
+.datePicker {
+  height: 30px;
+}

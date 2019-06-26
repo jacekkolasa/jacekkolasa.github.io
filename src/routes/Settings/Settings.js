@@ -7,6 +7,8 @@ import moment from 'moment';
 // eslint-disable-next-line no-unused-vars
 import stylesDatePicker from 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
+import PointsForm from 'components/PointsForm';
+
 import styles from './Settings.css';
 
 const Settings = () => {
@@ -26,26 +28,30 @@ const Settings = () => {
   return (
     <div className={styles.container}>
       Please provide neccessary data
-      <br />
-      Birth date:
-      <DatePicker
-        selected={birthDate}
-        onChange={(newDate) => {
-          // remove the second argument from onChange callback
-          setBirthDate(newDate);
-        }}
-        maxDate={new Date()}
-        showYearDropdown
-        className={styles.datePicker}
-      />
-      {birthDate && (
-        <div>
-          Age:
-          {' '}
-          {yearsString}
-          {monthsString}
-        </div>
-      )}
+      <div className={styles.birthDate}>
+        Birth date:
+        <DatePicker
+          selected={birthDate}
+          onChange={(newDate) => {
+            // remove the second argument from onChange callback
+            setBirthDate(newDate);
+          }}
+          maxDate={new Date()}
+          showYearDropdown
+          className={styles.datePicker}
+        />
+        {birthDate && (
+          <div>
+            Age:
+            {' '}
+            {yearsString}
+            {monthsString}
+          </div>
+        )}
+      </div>
+      <div className={styles.pointsForm}>
+        <PointsForm />
+      </div>
     </div>
   );
 };
