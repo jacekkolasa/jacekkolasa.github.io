@@ -2,6 +2,7 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import { Button } from 'react-bootstrap';
 
 // there's some react-static bug preventing import without assigning to value
 // eslint-disable-next-line no-unused-vars
@@ -10,6 +11,7 @@ import stylesDatePicker from 'react-datepicker/dist/react-datepicker-cssmodules.
 import PointsForm from 'components/PointsForm';
 
 import { useSettings } from './SettingsContext';
+import exampleData from './exampleData';
 import styles from './Settings.css';
 
 const Settings = () => {
@@ -58,6 +60,16 @@ const Settings = () => {
             setSettings({ ...settings, points: newPoints });
           }}
         />
+      </div>
+      <div>
+        <Button
+          variant="success"
+          onClick={() => {
+            setSettings(exampleData);
+          }}
+        >
+          Load example data
+        </Button>
       </div>
     </div>
   );

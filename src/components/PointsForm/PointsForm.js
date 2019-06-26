@@ -21,6 +21,7 @@ const PointsForm = ({
   <div>
     <Formik
       initialValues={{ points }}
+      enableReinitialize
       render={({ values }) => (
         <>
           <FormikObserver

@@ -6,7 +6,7 @@ export type Points = Array<{|
   measurementDate: Date,
 |}>
 
-type Settings = {|
+export type Settings = {|
   birthDate: ?Date,
   points: Points,
 |}
