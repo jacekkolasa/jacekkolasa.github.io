@@ -3,7 +3,7 @@ import React from 'react';
 
 import { Formik, Field, FieldArray } from 'formik';
 import DatePicker from 'react-datepicker';
-import { Form, Table } from 'react-bootstrap';
+import { Button, Form, Table } from 'react-bootstrap';
 
 import FormikObserver from 'utils/FormikObserver';
 
@@ -39,6 +39,7 @@ const PointsForm = ({
                   <tr>
                     <th className={styles.weightCol}>Weight</th>
                     <th className={styles.measurementCol}>Measurement Date</th>
+                    <th className={styles.buttonCol} />
                   </tr>
                 </thead>
                 <tbody>
@@ -76,6 +77,18 @@ const PointsForm = ({
                               />
                             )}
                           />
+                        </td>
+                        <td>
+                          <div>
+                            <Button
+                              variant="danger"
+                              onClick={() => {
+                                arrayHelpers.remove(index);
+                              }}
+                            >
+                              -
+                            </Button>
+                          </div>
                         </td>
                       </tr>
                     ))

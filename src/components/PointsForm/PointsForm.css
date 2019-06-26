@@ -8,6 +8,11 @@
 
 .measurementCol {
   width: 1px;
+  white-space: nowrap;
+}
+
+.buttonCol {
+  width: 1px;
 }
 
 .datePicker {
