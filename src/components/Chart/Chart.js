@@ -11,7 +11,7 @@ import { curveCardinal, line, scaleLinear } from 'd3';
 import atob from 'atob';
 import moment from 'moment';
 
-import { useSettings } from 'routes/Settings/SettingsContext';
+import type { Points } from 'routes/Settings/SettingsContext';
 
 // https://www.who.int/childgrowth/standards/tab_wfa_boys_p_0_5.txt
 // $ExpectError
@@ -62,6 +62,8 @@ const [minValue, maxValue] = pipe(
 )(data);
 
 type Props = {|
+  points: Points,
+  birthDate: ?Date,
 |}
 type EnhancedProps = {|
   ...Props,
@@ -83,6 +85,8 @@ const enhance: HOC<EnhancedProps, Props> = withContentRect('bounds');
 const SVG_HORIZONTAL_PADDING = 20;
 
 const Chart = ({
+  points,
+  birthDate,
   contentRect: {
     bounds,
   },
@@ -173,7 +177,6 @@ const Chart = ({
   /**
    * main line calculations
    */
-  const [{ points, birthDate }] = useSettings();
   const birthDateMoment = moment(birthDate);
 
   const linePoints = points.map(({ value, measurementDate }) => ({
