@@ -9,9 +9,8 @@
     "analyze": "react-static build --analyze",
     "serve": "serve dist -p 3000",
     "lint": "eslint .",
-    "flow": "flow",
     "test": "jest",
-    "checkAll": "yarn lint && yarn flow && yarn test",
+    "checkAll": "yarn lint && yarn test",
     "deploy": "gh-pages -d dist -b master"
   },
   "dependencies": {
@@ -32,10 +31,13 @@
     "recompose": "^0.30.0"
   },
   "devDependencies": {
-    "@babel/preset-flow": "^7.0.0",
+    "@types/react": "^16.8.23",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-hot-loader": "^4.1.0",
+    "@types/react-router-dom": "^4.3.4",
+    "@types/webpack-env": "^1.14.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.8.0",
-    "babel-plugin-flow-react-proptypes": "^25.1.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-babel": "^5.3.0",
@@ -43,12 +45,13 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-react-hooks": "^1.6.0",
-    "flow-bin": "^0.101.0",
     "gh-pages": "^2.0.1",
     "jest": "^24.8.0",
     "prop-types": "^15.7.2",
     "react-static-plugin-css-modules": "^7.1.0",
-    "react-static-plugin-react-router": "^7.0.10"
+    "react-static-plugin-react-router": "^7.0.10",
+    "react-static-plugin-typescript": "^7.0.10",
+    "typescript": "^3.5.3"
   },
   "resolutions": {
     "autoprefixer": "~9.5.1"

@@ -13,8 +13,7 @@
       1,
       {
         "extensions": [
-          ".js",
-          ".jsx"
+          ".tsx"
         ]
       }
     ],

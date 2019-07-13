@@ -1,12 +1,8 @@
-// This file is used to configure:
-// - static-site generation
-// - Document shell (index.html)
-// - ...tons of other things!
-
-// Get started at httsp://react-static.js.org
+import path from 'path';
 
 export default {
   siteRoot: 'https://jacekkolasa.github.io',
+  entry: path.join(__dirname, 'src', 'index.tsx'),
   getSiteData: () => ({
     title: 'Parental Tools',
   }),
@@ -23,6 +19,7 @@ export default {
   ],
   maxThreads: 1, // Remove this when you start doing any static generation
   plugins: [
+    'react-static-plugin-typescript',
     'react-static-plugin-react-router',
     'react-static-plugin-css-modules',
   ],
