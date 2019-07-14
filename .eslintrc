@@ -1,7 +1,10 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "extends": [
-    "airbnb"
+    "eslint:recommended",
+    "airbnb",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   "plugins": [
     "babel",
@@ -9,6 +12,7 @@
     "react-hooks"
   ],
   "rules": {
+    "@typescript-eslint/indent": ["error", 2],
     "react/jsx-filename-extension": [
       1,
       {
@@ -26,6 +30,7 @@
   "settings": {
     "import/resolver": {
       "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
         "paths": ["src"]
       }
     }
