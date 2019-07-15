@@ -1,13 +1,12 @@
-// @flow
 import { useEffect } from 'react';
 
 interface Props<T> {
-  onChange: (value: T) => void,
-  value: T
+  onChange: (value: T) => void;
+  value: T;
 }
 
 // eslint-disable-next-line arrow-parens
-const FormikObserver = <T: {}>(props: Props<T>) => {
+const FormikObserver = <T = {}, >(props: Props<T>): null => {
   const { value } = props;
   useEffect(() => {
     props.onChange(props.value);

@@ -1,18 +1,16 @@
-// @flow
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import { Button } from 'react-bootstrap';
 
-// there's some react-static bug preventing import without assigning to value
-// eslint-disable-next-line no-unused-vars
-import stylesDatePicker from 'react-datepicker/dist/react-datepicker-cssmodules.css';
-
 import PointsForm from 'components/PointsForm';
 
 import { useSettings } from './SettingsContext';
 import exampleData from './exampleData';
-import styles from './Settings.css';
+
+// there's some react-static bug preventing import without assigning to value
+require('react-datepicker/dist/react-datepicker-cssmodules.css');
+const styles = require('./Settings.css');
 
 const Settings = () => {
   const [settings, setSettings] = useSettings();

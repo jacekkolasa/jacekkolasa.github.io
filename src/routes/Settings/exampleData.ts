@@ -1,5 +1,4 @@
-// @flow
-import type { Settings } from './SettingsContext';
+import { Settings } from './SettingsContext';
 
 const exampleData: Settings = {
   birthDate: new Date('20 may 2015'),

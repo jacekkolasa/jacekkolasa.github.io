@@ -1,21 +1,22 @@
-// @flow
-import React from 'react';
+import React, { FC } from 'react';
 import { get } from 'lodash/fp';
 
-import { Formik, Field, FieldArray } from 'formik';
+import {
+  Formik, Field, FieldArray, FieldProps,
+} from 'formik';
 import DatePicker from 'react-datepicker';
 import { Button, Form, Table } from 'react-bootstrap';
 
 import FormikObserver from 'utils/FormikObserver';
 
-import styles from './PointsForm.css';
+const styles = require('./PointsForm.css');
 
-type Points = Array<{| value: number, measurementDate: Date |}>
-type Props = {|
-  points: Points,
-  onChange: (Points) => void,
-|}
-const PointsForm = ({
+type Points = { value: number; measurementDate: Date }[]
+interface Props {
+  points: Points;
+  onChange: (Points: Points) => void;
+}
+const PointsForm: FC<Props> = ({
   points,
   onChange,
 }: Props) => (
@@ -23,11 +24,12 @@ const PointsForm = ({
     <Formik
       initialValues={{ points }}
       enableReinitialize
+      onSubmit={() => null} // just for ts
       render={({ values }) => (
         <>
           <FormikObserver
             value={values.points}
-            onChange={(value) => {
+            onChange={(value: Points) => {
               if (value) { // prevent firing when the points are undefined on init
                 onChange(value);
               }
@@ -54,7 +56,7 @@ const PointsForm = ({
                           <td>
                             <Field
                               name={`points.${index}.value`}
-                              render={({ field }) => (
+                              render={({ field }: FieldProps) => (
                                 <Form.Control
                                   name={`points.${index}.value`}
                                   {...field}
@@ -68,7 +70,7 @@ const PointsForm = ({
                           <td>
                             <Field
                               name={`points.${index}.measurementDate`}
-                              render={({ field, form }) => (
+                              render={({ field, form }: FieldProps) => (
                                 <DatePicker
                                   selected={field.value}
                                   onChange={(newDate) => {
@@ -96,7 +98,7 @@ const PointsForm = ({
                           </td>
                         </tr>
                       ))
-                    }
+                      }
                     </tbody>
                   </Table>
                 )}

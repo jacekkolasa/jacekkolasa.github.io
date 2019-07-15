@@ -1,11 +1,10 @@
-// @flow
-import React from 'react';
+import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import NavbarBootstrap from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
-const Navbar = () => (
+const Navbar: FC = () => (
   <div>
     <NavbarBootstrap bg="light" expand="lg">
       <NavbarBootstrap.Brand href="#home">

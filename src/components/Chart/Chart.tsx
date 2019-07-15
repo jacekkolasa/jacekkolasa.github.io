@@ -1,59 +1,60 @@
-// @flow
 import {
   flatMap, last, map, max, min, omit, pipe, rangeStep, values,
 } from 'lodash/fp';
 import classNames from 'classnames';
-import * as React from 'react';
+import React, { FC } from 'react';
 import Papa from 'papaparse';
 import { withContentRect } from 'react-measure';
-import type { HOC } from 'recompose';
-import { curveCardinal, line, scaleLinear } from 'd3';
+// import { HOC } from 'recompose';
+import {
+  curveCardinal, line, Line, scaleLinear,
+} from 'd3';
 import atob from 'atob';
 import moment from 'moment';
 
-import type { Points } from 'routes/Settings/SettingsContext';
+import { Points } from 'routes/Settings/SettingsContext';
 
 // https://www.who.int/childgrowth/standards/tab_wfa_boys_p_0_5.txt
-// $ExpectError
+// @ts-ignore
 import whoData from '../../data/tab_wfa_boys_p_0_5.txt';
 
-import styles from './styles.css';
+const styles = require('./styles.css');
 
-type Point = {|
-  L: number,
-  M: number,
-  S: number,
+interface Point {
+  L: number;
+  M: number;
+  S: number;
 
-  Month: number,
+  Month: number;
 
-  P01: number,
-  P1: number,
-  P3: number,
-  P5: number,
-  P10: number,
-  P15: number,
-  P25: number,
-  P50: number,
-  P75: number,
-  P85: number,
-  P90: number,
-  P95: number,
-  P97: number,
-  P99: number,
-  P999: number,
-|}
+  P01: number;
+  P1: number;
+  P3: number;
+  P5: number;
+  P10: number;
+  P15: number;
+  P25: number;
+  P50: number;
+  P75: number;
+  P85: number;
+  P90: number;
+  P95: number;
+  P97: number;
+  P99: number;
+  P999: number;
+}
 
 const dataString = atob(whoData.split(',')[1]);
-type FormattedData = {
-  data: Array<Point>,
-};
-const formatted: FormattedData = Papa.parse(
+interface FormattedData {
+  data: [Point, ...Point[]]; // non-empty array
+}
+const formatted = Papa.parse(
   dataString.slice(0, -1), // remove last new-line character
   {
     header: true, // get keys based on first row
     dynamicTyping: true, // convert number strings to Numbers
   },
-);
+) as unknown as FormattedData; // insufficient typings from Papa
 const { data } = formatted;
 const [minValue, maxValue] = pipe(
   map(omit(['L', 'M', 'S', 'Month'])), // from each point select only props with values we'll draw
@@ -61,30 +62,30 @@ const [minValue, maxValue] = pipe(
   allValues => [min(allValues), max(allValues)],
 )(data);
 
-type Props = {|
-  points: Points,
-  birthDate: ?Date,
-|}
-type EnhancedProps = {|
-  ...Props,
+interface Props {
+  points: Points;
+  birthDate: Date | null;
+}
+interface Bounds {
+  bottom: number;
+  height: number;
+  left: number;
+  right: number;
+  top: number;
+  width: number;
+}
+interface EnhancedProps extends Props {
   contentRect: {
-    bounds: {||} | {|
-      bottom: number,
-      height: number,
-      left: number,
-      right: number,
-      top: number,
-      width: number,
-    |}
-  },
-  measureRef: () => void // { current: null | React.ElementRef<'div'> }
-|}
+    bounds: Bounds | {};
+  };
+  measureRef: () => void;
+}
 
-const enhance: HOC<EnhancedProps, Props> = withContentRect('bounds');
+const enhance = withContentRect('bounds');
 
 const SVG_HORIZONTAL_PADDING = 20;
 
-const Chart = ({
+const Chart: FC<EnhancedProps> = ({
   points,
   birthDate,
   contentRect: {
@@ -92,7 +93,7 @@ const Chart = ({
   },
   measureRef,
 }: EnhancedProps) => {
-  if (!bounds.width) {
+  if (!('width' in bounds)) {
     return (<div ref={measureRef} className={styles.container} />);
   }
   const svgWidth = bounds.width - 100;
@@ -111,7 +112,7 @@ const Chart = ({
    * x scale calculations
    *
    */
-  const maxMonth = last(data).Month;
+  const maxMonth = (last(data) as Point).Month;
   const xScale = scaleLinear()
     .domain([0, maxMonth])
     .range([SVG_PADDING, VIEWBOX_X - SVG_PADDING])
@@ -139,8 +140,8 @@ const Chart = ({
     data.length,
   );
 
-  const isYearTick = tick => tick % 12 === 0;
-  const transformTick = tick => (
+  const isYearTick = (tick: number): boolean => tick % 12 === 0;
+  const transformTick = (tick: number): string|number => (
     isYearTick(tick)
       ? (`${tick / 12} years`)
       : tick % 12
@@ -159,12 +160,19 @@ const Chart = ({
     .ticks(10);
 
 
-  const getLine = (yProp, lineData) => line()
+  interface Percentile {
+    label: string;
+    propName: 'P01' | 'P1' | 'P3' | 'P5' | 'P10' | 'P15' | 'P25' | 'P50' | 'P75' | 'P85' | 'P90'
+    | 'P95' | 'P97' | 'P99' | 'P999';
+    stroke: string;
+  }
+
+  const getLine = (yProp: Percentile['propName'], lineData: FormattedData['data']) => line<Point>()
     .x(d => xScale(d.Month))
     .y(d => yScale(d[yProp]))
     .curve(curveCardinal)(lineData);
 
-  const percentiles = [
+  const percentiles: Percentile[] = [
     { label: '3rd', propName: 'P3', stroke: '#9E2123' },
     { label: '15th', propName: 'P15', stroke: '#672022' },
     { label: '50th', propName: 'P50', stroke: '#669966' },
@@ -173,17 +181,17 @@ const Chart = ({
   ];
   const sizeInPx = pixels => VIEWBOX_X / svgWidth * pixels;
 
-
   /**
    * main line calculations
    */
   const birthDateMoment = moment(birthDate);
 
+  interface LinePoint { x: number; y: number }
   const linePoints = points.map(({ value, measurementDate }) => ({
     x: -birthDateMoment.diff(measurementDate, 'months'),
     y: value / 1000, // grams to kg
   }));
-  const mainLine = line()
+  const mainLine = line<LinePoint>()
     .x(d => xScale(d.x))
     .y(d => yScale(d.y))
     .curve(curveCardinal);
@@ -252,7 +260,7 @@ const Chart = ({
               />
               <text
                 x={VIEWBOX_X - SVG_PADDING + 4}
-                y={yScale(last(data)[percentile.propName]) + 2}
+                y={yScale((last(data) as Point)[percentile.propName]) + 2}
                 fontSize={sizeInPx(12)}
               >
                 {percentile.label}
